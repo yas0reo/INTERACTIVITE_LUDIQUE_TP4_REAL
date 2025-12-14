@@ -24,6 +24,7 @@ var next_direction_change := 5.0
 @onready var direction_timer = $DirectionTimer
 @onready var hitbox = $Hitbox
 @onready var hitbox_collision = $Hitbox/CollisionShape2D
+@onready var health_bar = $HealthBar
 
 var hitbox_base_x := 0.0
 
@@ -31,12 +32,15 @@ func _ready():
 	add_to_group("enemies")
 	health = max_health
 	anim.play("Walk")
+	
 	if hitbox_collision:
 		hitbox_base_x = abs(hitbox_collision.position.x)
 		hitbox_collision.position.y = 0.0
 		var shape = hitbox_collision.shape as CircleShape2D
 		if shape:
 			shape.radius = 30.0
+	
+	# Health bar will auto-initialize from parent's health values
 	
 	randomize()
 	next_direction_change = randf_range(5.0, 8.0)
@@ -52,18 +56,17 @@ func _physics_process(delta):
 	else:
 		velocity.y = 0
 	
-
 	if hitbox_collision:
 		if is_moving_left:
 			hitbox_collision.position.x = -hitbox_base_x
 		else:
 			hitbox_collision.position.x = hitbox_base_x
 	
-
 	if is_stunned or is_attacking:
 		velocity.x = 0
 		move_and_slide()
 		return
+		
 	player = Global.playerBody
 	if player and is_instance_valid(player):
 		var distance = position.distance_to(player.position)
@@ -161,6 +164,10 @@ func take_damage(amount: int):
 	health -= amount
 	print("Slime took ", amount, " damage. Health: ", health)
 	
+	# Update health bar
+	if health_bar:
+		health_bar.value = health
+	
 	if health <= 0:
 		die()
 		return
@@ -174,7 +181,6 @@ func apply_stun():
 	is_attacking = false 
 	velocity.x = 0
 	
-
 	if anim.sprite_frames.has_animation("Stun"):
 		anim.play("Stun")
 	var original_modulate = anim.modulate
@@ -192,6 +198,10 @@ func die():
 	is_attacking = false
 	is_stunned = false
 	velocity = Vector2.ZERO
+	
+	# Hide health bar
+	if health_bar:
+		health_bar.visible = false
 	
 	anim.play("Death")
 	

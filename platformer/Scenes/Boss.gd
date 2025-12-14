@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var move_speed := 200.0
 @export var spawn_detection_range := 600.0
 @export var chase_detection_range := 350.0
-@export var max_health := 250
+@export var max_health := 450
 @export var attack_damage := 50
 @export var stun_damage_threshold := 50
 @export var stun_duration := 2.0
@@ -19,6 +19,7 @@ var damage_accumulated := 0
 var player: Node = null
 var can_attack := true
 var has_spawned := false
+var is_currently_attacking := false
 
 # --- NODES ---
 @onready var anim = $AnimatedSprite2D
@@ -97,9 +98,9 @@ func move_and_attack(delta):
 	# Only chase if within detection range
 	if distance <= chase_detection_range:
 		# Attack if in range
-		if distance < attack_range and can_attack:
+		if distance < attack_range and can_attack and not is_currently_attacking:
 			start_attack()
-		else:
+		elif not is_currently_attacking:
 			# Chase player (only horizontal movement)
 			var direction = (player.global_position - global_position).normalized()
 			velocity.x = direction.x * move_speed
@@ -111,32 +112,31 @@ func move_and_attack(delta):
 				anim.flip_h = false
 			
 			# Play run animation when moving
-			if not is_attacking() and absf(velocity.x) > 10:
+			if absf(velocity.x) > 10:
 				if anim.sprite_frames.has_animation("run"):
 					anim.play("run")
 				else:
 					anim.play("idle")
-			elif not is_attacking():
+			else:
 				anim.play("idle")
 	else:
-		# Stand idle if player is out of range
 		velocity.x = 0
-		if not is_attacking():
+		if not is_currently_attacking:
 			anim.play("idle")
 	
 	move_and_slide()
 
-func is_attacking() -> bool:
-	return anim.animation == "attack" and anim.is_playing()
-
 func start_attack():
+	is_currently_attacking = true
 	can_attack = false
 	velocity.x = 0  # Only stop horizontal movement
 	anim.play("attack")
-	var frame_time = 10.0 / 12.0  
 	
+	# Wait for damage frame (frame 10 out of 12)
+	var frame_time = 10.0 / 12.0  
 	await get_tree().create_timer(frame_time).timeout
 
+	# Deal damage
 	if player and is_instance_valid(player) and not is_dead and not is_stunned:
 		var distance = global_position.distance_to(player.global_position)
 		if distance < attack_range:
@@ -144,14 +144,17 @@ func start_attack():
 				player.take_damage(attack_damage)
 				print("Boss dealt ", attack_damage, " damage to player")
 	
-	# Wait for animation to finish
-	await anim.animation_finished
+	# Wait for animation to finish (total animation time at 10fps = 1.2 seconds)
+	var remaining_time = (12.0 / 10.0) - frame_time
+	await get_tree().create_timer(remaining_time).timeout
 	
-	# Cooldown before next attack
-	await get_tree().create_timer(1.5).timeout
+	is_currently_attacking = false
 	
+	# If still alive and not stunned, wait cooldown then allow next attack
 	if not is_dead and not is_stunned:
-		can_attack = true
+		await get_tree().create_timer(1.5).timeout
+		if not is_dead and not is_stunned:
+			can_attack = true
 
 # --- DAMAGE HANDLING ---
 func take_damage(amount: int, attack_type: String = ""):
@@ -173,6 +176,7 @@ func take_damage(amount: int, attack_type: String = ""):
 func stun():
 	is_stunned = true
 	can_attack = false
+	is_currently_attacking = false
 	velocity.x = 0  # Only stop horizontal movement, gravity still applies
 	
 	# Play stun animation
@@ -184,6 +188,7 @@ func stun():
 func _on_stun_timeout():
 	if not is_dead:
 		is_stunned = false
+		can_attack = true  # Reset attack capability after stun
 		anim.play("idle")
 
 # --- DEATH ---
@@ -191,6 +196,7 @@ func die():
 	is_dead = true
 	is_stunned = false
 	can_attack = false
+	is_currently_attacking = false
 	velocity.x = 0  # Only stop horizontal movement
 	
 	freeze_all_entities(true)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://dg6ww0ogxt5rq"]
+[gd_scene load_steps=30 format=3 uid="uid://dg6ww0ogxt5rq"]
 
 [ext_resource type="Script" uid="uid://cx47ewjey2gfa" path="res://Scenes/slime.gd" id="1_cwriv"]
 [ext_resource type="Texture2D" uid="uid://tj2v6wudwxj2" path="res://Assets/Sprites/3-Slime/slime-Sheet.png" id="2_oh23g"]
+[ext_resource type="Script" uid="uid://k6otjkt6jhi2" path="res://Scenes/EnemyHealthBar.gd" id="3_7yyg5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yp2de"]
 atlas = ExtResource("2_oh23g")
@@ -179,6 +180,12 @@ size = Vector2(26, 12)
 [sub_resource type="CircleShape2D" id="CircleShape2D_p1xxi"]
 radius = 25.3684
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1xxi"]
+bg_color = Color(0.3, 0.1, 0.1, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yyg5"]
+bg_color = Color(0, 0.720811, 0.318085, 1)
+
 [node name="Slime" type="CharacterBody2D" groups=["enemies"]]
 scale = Vector2(3, 3)
 script = ExtResource("1_cwriv")
@@ -204,5 +211,19 @@ target_position = Vector2(0, 29)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(24.6667, 1)
 shape = SubResource("CircleShape2D_p1xxi")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(40, 4)
+offset_left = -20.0
+offset_top = -17.0
+offset_right = 20.0
+offset_bottom = -13.0
+theme_override_styles/background = SubResource("StyleBoxFlat_p1xxi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7yyg5")
+max_value = 50.0
+step = 1.0
+value = 50.0
+show_percentage = false
+script = ExtResource("3_7yyg5")
 
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://ctos8mvrvj1rm"]
+[gd_scene load_steps=12 format=4 uid="uid://ctos8mvrvj1rm"]
 
 [ext_resource type="PackedScene" uid="uid://qx8ypcr0pvck" path="res://Scenes/player.tscn" id="1_cydlf"]
 [ext_resource type="AudioStream" uid="uid://cv1qkb3qf47jm" path="res://Assets/Music and sound/Jump Sound Effect (High Quality) - JUKEBOX (youtube).mp3" id="2_gmo3f"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dgkha8ivd44wo" path="res://Assets/Level_design/dungeon_sidescroller-Raou/Tilesetv3Bigger.png" id="4_0tdqa"]
 [ext_resource type="PackedScene" uid="uid://m8k45hnpdqu0" path="res://Scenes/enemy_door_scene2.tscn" id="5_1ao6r"]
 [ext_resource type="AudioStream" uid="uid://1f4vxkvcs2i3" path="res://Assets/Music and sound/Level_1_Music.mp3" id="6_rvjqv"]
+[ext_resource type="PackedScene" uid="uid://eysts6v5445c" path="res://Scenes/bat.tscn" id="7_0tdqa"]
+[ext_resource type="PackedScene" uid="uid://2ywol3pxb1x" path="res://Scenes/skeleton.tscn" id="8_1ao6r"]
+[ext_resource type="PackedScene" uid="uid://dg6ww0ogxt5rq" path="res://Scenes/Slime.tscn" id="9_rvjqv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6tvcj"]
 texture = ExtResource("4_0tdqa")
@@ -3017,6 +3020,7 @@ tile_set = SubResource("TileSet_4qg0q")
 
 [node name="Player" parent="." instance=ExtResource("1_cydlf")]
 position = Vector2(2038, 532)
+scale = Vector2(0.7, 0.7)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-4, -1)
@@ -3044,3 +3048,30 @@ stream = ExtResource("6_rvjqv")
 volume_db = -10.0
 autoplay = true
 max_distance = 4096.0
+
+[node name="BatEnemy" parent="." instance=ExtResource("7_0tdqa")]
+position = Vector2(2533, -1075)
+
+[node name="BatEnemy2" parent="." instance=ExtResource("7_0tdqa")]
+position = Vector2(765, -535)
+
+[node name="BatEnemy3" parent="." instance=ExtResource("7_0tdqa")]
+position = Vector2(2331, 55)
+
+[node name="SkeletonEnemy2" parent="." instance=ExtResource("8_1ao6r")]
+position = Vector2(1621, -370)
+scale = Vector2(0.66, 0.66)
+
+[node name="SkeletonEnemy3" parent="." instance=ExtResource("8_1ao6r")]
+position = Vector2(1351, -940)
+scale = Vector2(0.66, 0.66)
+
+[node name="SkeletonEnemy4" parent="." instance=ExtResource("8_1ao6r")]
+position = Vector2(937, 258)
+scale = Vector2(0.66, 0.66)
+
+[node name="Slime" parent="." instance=ExtResource("9_rvjqv")]
+position = Vector2(1610, -124)
+
+[node name="Slime2" parent="." instance=ExtResource("9_rvjqv")]
+position = Vector2(2178, -958)

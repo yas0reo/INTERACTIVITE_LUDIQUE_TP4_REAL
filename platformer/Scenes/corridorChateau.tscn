@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=4 uid="uid://d3rnrn8w0mgy3"]
+[gd_scene load_steps=10 format=4 uid="uid://d3rnrn8w0mgy3"]
 
 [ext_resource type="PackedScene" uid="uid://qx8ypcr0pvck" path="res://Scenes/player.tscn" id="1_bovo1"]
 [ext_resource type="AudioStream" uid="uid://cv1qkb3qf47jm" path="res://Assets/Music and sound/Jump Sound Effect (High Quality) - JUKEBOX (youtube).mp3" id="2_ouca6"]
 [ext_resource type="AudioStream" uid="uid://pdadwp2tmsm8" path="res://Assets/Music and sound/Dash.mp3" id="3_hjbn0"]
 [ext_resource type="Texture2D" uid="uid://b708df8vtnqfa" path="res://Assets/Level_design/Final- Generic DUNGEON Pack/Assets/Assets.png" id="4_ckcem"]
 [ext_resource type="PackedScene" uid="uid://m8k45hnpdqu0" path="res://Scenes/enemy_door_scene2.tscn" id="5_pda66"]
-[ext_resource type="AudioStream" uid="uid://1f4vxkvcs2i3" path="res://Assets/Music and sound/Level_1_Music.mp3" id="6_f32am"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bovo1"]
 texture = ExtResource("4_ckcem")
@@ -499,6 +498,7 @@ tile_set = SubResource("TileSet_pkjik")
 
 [node name="Player" parent="." instance=ExtResource("1_bovo1")]
 position = Vector2(44, 476)
+scale = Vector2(0.7, 0.7)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-4, -1)
@@ -519,10 +519,3 @@ stream = ExtResource("3_hjbn0")
 
 [node name="Door" parent="." instance=ExtResource("5_pda66")]
 position = Vector2(7015, 273)
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(1921, -349)
-stream = ExtResource("6_f32am")
-volume_db = -10.0
-autoplay = true
-max_distance = 4096.0

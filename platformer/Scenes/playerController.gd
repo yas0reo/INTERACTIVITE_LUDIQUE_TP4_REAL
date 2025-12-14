@@ -21,12 +21,14 @@ extends CharacterBody2D
 @export var heart_count := 5
 @export var killzone_y := 1200.0
 @export var respawn_position := Vector2(100, 100)
+@export var invincibility_duration := 1.0  # Durée d'invincibilité après un dégât
 
 var max_health : int
 var health : int
 var alive := true
 var hearts_list : Array[TextureRect] = []
 var fall_damage_cooldown := false
+var is_invincible := false  # Nouvelle variable pour l'invincibilité
 
 # --- ATTACKS ---
 @export var attack1_damage := 10
@@ -35,6 +37,13 @@ var fall_damage_cooldown := false
 var can_attack := true
 var is_attacking := false
 var attack_timer := 0.0
+
+# --- RANGED ATTACK ---
+@export var projectile_scene: PackedScene
+@export var projectile_damage := 20
+@export var projectile_cooldown := 0.5
+@export var projectile_offset := Vector2(40, -20)
+var can_shoot := true
 
 # --- NODES (onready) ---
 @onready var attack_area: Area2D = $AttackArea
@@ -57,6 +66,7 @@ var attack_area_base_x := 0.0
 
 func _ready():
 	Global.playerBody = self
+	add_to_group("player")
 
 	max_health = heart_value * heart_count
 	health = max_health
@@ -70,6 +80,10 @@ func _ready():
 	if attack_collision:
 		attack_area_base_x = attack_collision.position.x
 		attack_collision.disabled = true
+	
+	# Load projectile scene if not set
+	if not projectile_scene:
+		projectile_scene = load("res://Scenes/Projectile.tscn")
 
 func _physics_process(delta: float) -> void:
 
@@ -106,9 +120,13 @@ func _physics_process(delta: float) -> void:
 			perform_attack(1)
 		elif Input.is_action_just_pressed("Attack2"):
 			perform_attack(2)
+	
+	# --- RANGED ATTACK INPUT (Press I or add your own key) ---
+	if Input.is_action_just_pressed("ui_text_backspace") and can_shoot and not is_attacking:
+		shoot_projectile()
 
 	# --- DASH → JUMP COMBO ---
-	if not is_attacking or attack_timer < 0.2:  # Allow jump during most of attack
+	if not is_attacking or attack_timer < 0.2:
 		if Input.is_action_just_pressed("Jump"):
 			if is_dashing:
 				stop_dash()
@@ -134,29 +152,25 @@ func _physics_process(delta: float) -> void:
 	# --- HORIZONTAL MOVEMENT ---
 	var direction := Input.get_axis("Left", "Right")
 
-	# Allow movement during attack, but reduce speed slightly
 	var movement_multiplier = 0.7 if is_attacking else 1.0
 	
 	if not is_dashing:
 		if direction != 0:
 			velocity.x = move_toward(velocity.x, direction * target_speed * movement_multiplier, target_speed * acceleration)
-			# Only flip sprite if not attacking
 			if not is_attacking:
 				animated_sprite.flip_h = direction < 0
-			# Play movement animation only if not attacking
 			if is_on_floor() and not is_attacking:
 				var anim_name := "Run" if is_running else "Walk"
 				if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation(anim_name):
 					animated_sprite.play(anim_name)
 		else:
 			velocity.x = move_toward(velocity.x, 0, walk_speed * deceleration)
-			# Play idle only if not attacking
 			if is_on_floor() and not is_attacking:
 				if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("Idle"):
 					animated_sprite.play("Idle")
 
 	# --- DASH ---
-	if not is_attacking or attack_timer < 0.1:  # Allow dash near end of attack
+	if not is_attacking or attack_timer < 0.1:
 		if Input.is_action_just_pressed("Dash") and direction != 0 and can_dash and not is_dashing:
 			start_dash(direction)
 			is_attacking = false
@@ -180,6 +194,36 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+# --- RANGED ATTACK ---
+func shoot_projectile():
+	if not projectile_scene:
+		print("No projectile scene assigned!")
+		return
+	
+	can_shoot = false
+	
+	# Spawn projectile
+	var projectile = projectile_scene.instantiate()
+	get_parent().add_child(projectile)
+	
+	# Position projectile
+	var spawn_offset = projectile_offset
+	if animated_sprite.flip_h:
+		spawn_offset.x = -spawn_offset.x
+	projectile.global_position = global_position + spawn_offset
+	
+	# Set projectile direction
+	var shoot_direction = Vector2.RIGHT if not animated_sprite.flip_h else Vector2.LEFT
+	projectile.set_direction(shoot_direction)
+	projectile.damage = projectile_damage
+	
+	print("Player shot projectile")
+	
+	# Cooldown
+	await get_tree().create_timer(projectile_cooldown).timeout
+	can_shoot = true
+
+
 # --- ATTACK FUNCTIONS ---
 func perform_attack(type: int) -> void:
 	can_attack = false
@@ -188,7 +232,7 @@ func perform_attack(type: int) -> void:
 	var damage := 0
 	var attack_sound: AudioStreamPlayer2D = null
 	var anim_name := ""
-	var attack_duration := 0.4  
+	var attack_duration := 0.4
 
 	match type:
 		1:
@@ -206,7 +250,6 @@ func perform_attack(type: int) -> void:
 
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation(anim_name):
 		animated_sprite.play(anim_name)
-
 
 	if attack_sound:
 		attack_sound.play()
@@ -253,12 +296,23 @@ func _on_dash_cooldown_finished() -> void:
 
 # --- HEALTH SYSTEM ---
 func take_damage(amount: int):
-	if not alive:
+	if not alive or is_invincible:
 		return
 
 	health = max(health - amount, 0)
 	print("Player took ", amount, " damage. Health: ", health, "/", max_health)
 	update_heart_display()
+	
+	# Active l'invincibilité
+	is_invincible = true
+	
+	# Effet visuel de clignotement (optionnel)
+	start_invincibility_flicker()
+	
+	# Désactive l'invincibilité après la durée définie
+	await get_tree().create_timer(invincibility_duration).timeout
+	is_invincible = false
+	animated_sprite.modulate.a = 1.0  # Remet l'opacité normale
 
 	if health <= heart_value and health > 0:
 		if low_health_sound:
@@ -269,16 +323,56 @@ func take_damage(amount: int):
 		call_deferred("death")
 
 
+# Effet visuel de clignotement pendant l'invincibilité
+func start_invincibility_flicker():
+	var flicker_count = int(invincibility_duration / 0.1)  # Clignote toutes les 0.1 secondes
+	for i in range(flicker_count):
+		if not is_invincible:
+			break
+		animated_sprite.modulate.a = 0.5 if i % 2 == 0 else 1.0
+		await get_tree().create_timer(0.1).timeout
+
+
 func update_heart_display():
 	var hearts_to_show = int(ceil(float(health) / float(heart_value)))
+	
 	for i in range(hearts_list.size()):
-		hearts_list[i].visible = i < hearts_to_show
+		var heart_container = hearts_list[i]
+		var heart_sprite = heart_container.get_node_or_null("Heart") as AnimatedSprite2D
+		
+		if not heart_sprite:
+			continue
+		
+		if i < hearts_to_show:
+			# Heart should be visible
+			heart_container.visible = true
+			
+			# Calculate fill percentage for partial heart
+			if i == hearts_to_show - 1:
+				var remaining_health = health - (i * heart_value)
+				var fill_percent = float(remaining_health) / float(heart_value)
+				
+				# Fade from top by adjusting modulate alpha
+				heart_sprite.modulate.a = fill_percent
+			else:
+				# Full heart
+				heart_sprite.modulate.a = 1.0
+		else:
+			# Heart should fade out completely
+			if heart_container.visible:
+				var tween = create_tween()
+				tween.tween_property(heart_sprite, "modulate:a", 0.0, 0.5)
+				tween.tween_callback(func(): 
+					heart_container.visible = false
+					heart_sprite.modulate.a = 1.0  # Reset for when health is restored
+				)
 
 
 func respawn():
 	position = respawn_position
 	velocity = Vector2.ZERO
 	alive = true
+	is_invincible = false
 	set_process(true)
 	set_physics_process(true)
 	update_heart_display()

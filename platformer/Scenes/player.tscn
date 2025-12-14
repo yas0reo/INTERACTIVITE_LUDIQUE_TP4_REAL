@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://qx8ypcr0pvck"]
+[gd_scene load_steps=65 format=3 uid="uid://qx8ypcr0pvck"]
 
 [ext_resource type="Script" uid="uid://ctaadb6aldoau" path="res://Scenes/playerController.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://cbv7iyg8elilv" path="res://Assets/Sprites/1-Knight/Dash/7eaecf92-14a9-4fcb-9fe3-ed2bf245f777-0.png" id="2_efrwb"]
@@ -39,6 +39,7 @@
 [ext_resource type="AudioStream" uid="uid://cs1rgdyt410y2" path="res://Assets/Music and sound/Attack2.mp3" id="37_xwi16"]
 [ext_resource type="AudioStream" uid="uid://cv1qkb3qf47jm" path="res://Assets/Music and sound/Jump Sound Effect (High Quality) - JUKEBOX (youtube).mp3" id="38_sweqm"]
 [ext_resource type="AudioStream" uid="uid://pdadwp2tmsm8" path="res://Assets/Music and sound/Dash.mp3" id="39_ph33w"]
+[ext_resource type="PackedScene" uid="uid://cudqlup4x37bs" path="res://Scenes/pause_menu_scene.tscn" id="40_xwi16"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(34, 63)
@@ -452,6 +453,7 @@ animation = &"Beat"
 frame_progress = 0.629262
 
 [node name="AttackArea" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="AttackArea" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2(48, -2)
@@ -475,3 +477,5 @@ volume_db = -3.0
 position = Vector2(0, -1)
 stream = ExtResource("39_ph33w")
 volume_db = -3.0
+
+[node name="PauseMenu" parent="." instance=ExtResource("40_xwi16")]

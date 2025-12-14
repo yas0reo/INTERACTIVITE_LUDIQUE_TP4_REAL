@@ -40,7 +40,7 @@ func pause_game():
 	get_tree().paused = true
 	pause_panel.visible = true
 	options_panel.visible = false
-	adjust_music_volume(-3.0)
+	adjust_music_volume(-1.0)
 
 func resume_game():
 	get_tree().paused = false

@@ -236,7 +236,7 @@ func _on_new_game_pressed():
 	# Delete existing save if any
 	if FileAccess.file_exists("user://savegame.save"):
 		DirAccess.remove_absolute("user://savegame.save")
-	
+
 	var fade_out = create_tween()
 	fade_out.tween_property(fade_overlay, "modulate:a", 1.0, 1.0)
 	await fade_out.finished
@@ -266,9 +266,7 @@ func _on_infinite_mode_pressed():
 	var fade_out = create_tween()
 	fade_out.tween_property(fade_overlay, "modulate:a", 1.0, 1.0)
 	await fade_out.finished
-	# TODO: Replace with your infinite mode scene
-	# get_tree().change_scene_to_file("res://Scenes/Infinite_Mode.tscn")
-	print("Infinite mode not yet implemented")
+	get_tree().change_scene_to_file("res://Scenes/Infinite_Mode.tscn")
 
 func _on_mode_back_pressed():
 	var fade_mode = create_tween()

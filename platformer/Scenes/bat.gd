@@ -27,12 +27,15 @@ var next_direction_change := 3.0
 
 @onready var anim = $AnimatedSprite2D
 @onready var hitbox = $Hitbox
+@onready var health_bar = $HealthBar
 
 func _ready():
 	add_to_group("enemies")
 	health = max_health
 	anim.play("Fly")
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
+	
+	# Health bar will auto-initialize from parent's health values
 	
 	randomize()
 	direction.x = 1 if randf() > 0.5 else -1
@@ -137,6 +140,10 @@ func take_damage(amount: int, attack_type: String=""):
 
 	health -= amount
 	print("Bat took ", amount, " damage. Health: ", health)
+	
+	# Update health bar
+	if health_bar:
+		health_bar.value = health
 
 	if health <= 0:
 		die()
@@ -177,12 +184,15 @@ func apply_hurt(attack_type: String=""):
 		anim.play("Fly")
 
 # Mort
-
 func die():
 	is_dead = true
 	can_attack = false
 	is_stunned = false
 	velocity = Vector2.ZERO
+	
+	# Hide health bar
+	if health_bar:
+		health_bar.visible = false
 	
 	if anim.sprite_frames.has_animation("Death"):
 		anim.play("Death")
