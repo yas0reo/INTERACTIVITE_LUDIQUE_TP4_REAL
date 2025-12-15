@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var next_scene_path := "res://Scenes/win_screen.tscn"
+@export var next_scene_path := "res://Scenes/corridor_chateau_2.tscn"
 @export var play_open_animation := false
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 

@@ -1,12 +1,17 @@
-[gd_scene load_steps=8 format=4 uid="uid://c26fpfwk5u6rm"]
+[gd_scene load_steps=13 format=4 uid="uid://c26fpfwk5u6rm"]
 
 [ext_resource type="PackedScene" uid="uid://qx8ypcr0pvck" path="res://Scenes/player.tscn" id="1_brh15"]
 [ext_resource type="AudioStream" uid="uid://cv1qkb3qf47jm" path="res://Assets/Music and sound/Jump Sound Effect (High Quality) - JUKEBOX (youtube).mp3" id="2_62laa"]
 [ext_resource type="AudioStream" uid="uid://pdadwp2tmsm8" path="res://Assets/Music and sound/Dash.mp3" id="3_3fdtt"]
 [ext_resource type="Texture2D" uid="uid://dgkha8ivd44wo" path="res://Assets/Level_design/dungeon_sidescroller-Raou/Tilesetv3Bigger.png" id="4_2vec3"]
 [ext_resource type="AudioStream" uid="uid://1f4vxkvcs2i3" path="res://Assets/Music and sound/Level_1_Music.mp3" id="5_bm5w1"]
+[ext_resource type="PackedScene" uid="uid://ndcw71u4wcbv" path="res://Scenes/door_2.tscn" id="6_62laa"]
+[ext_resource type="PackedScene" uid="uid://2ywol3pxb1x" path="res://Scenes/skeleton.tscn" id="7_bm5w1"]
+[ext_resource type="PackedScene" uid="uid://dg6ww0ogxt5rq" path="res://Scenes/Slime.tscn" id="8_o361g"]
+[ext_resource type="PackedScene" uid="uid://eysts6v5445c" path="res://Scenes/bat.tscn" id="9_b2wk7"]
+[ext_resource type="AudioStream" uid="uid://7871jwg1nw2r" path="res://Assets/Music and sound/Level_2_Music.mp3" id="10_o361g"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6tvcj"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_brh15"]
 texture = ExtResource("4_2vec3")
 0:0/0 = 0
 1:0/0 = 0
@@ -2999,7 +3004,7 @@ texture = ExtResource("4_2vec3")
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 4
 physics_layer_1/collision_mask = 4
-sources/0 = SubResource("TileSetAtlasSource_6tvcj")
+sources/0 = SubResource("TileSetAtlasSource_brh15")
 
 [node name="dungeonCoffre" type="Node2D"]
 position = Vector2(4, 0)
@@ -3040,3 +3045,32 @@ stream = ExtResource("5_bm5w1")
 volume_db = -10.0
 autoplay = true
 max_distance = 4096.0
+
+[node name="Door_2" parent="." instance=ExtResource("6_62laa")]
+position = Vector2(3753, 769)
+
+[node name="SkeletonEnemy" parent="." instance=ExtResource("7_bm5w1")]
+position = Vector2(1734, 515)
+
+[node name="SkeletonEnemy2" parent="." instance=ExtResource("7_bm5w1")]
+position = Vector2(4089, 409)
+scale = Vector2(0.7, 0.7)
+
+[node name="Slime" parent="." instance=ExtResource("8_o361g")]
+position = Vector2(3189, 2)
+
+[node name="Slime2" parent="." instance=ExtResource("8_o361g")]
+position = Vector2(4066, -371)
+
+[node name="BatEnemy" parent="." instance=ExtResource("9_b2wk7")]
+position = Vector2(687, 683)
+
+[node name="BatEnemy2" parent="." instance=ExtResource("9_b2wk7")]
+position = Vector2(2579, 150)
+
+[node name="BatEnemy3" parent="." instance=ExtResource("9_b2wk7")]
+position = Vector2(4743, 358)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_o361g")
+volume_db = -4.643

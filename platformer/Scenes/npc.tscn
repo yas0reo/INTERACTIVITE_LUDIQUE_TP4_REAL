@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://d32tl21kgxxu7"]
 
 [ext_resource type="Script" uid="uid://b2oienvpumst7" path="res://Scenes/npc.gd" id="1_acqhf"]
-[ext_resource type="Texture2D" path="res://Assets/Sprites/10 -NPC Witch/pixilart-sprite.png" id="2_xxsvc"]
+[ext_resource type="Texture2D" uid="uid://c5hahi0j437gy" path="res://Assets/Sprites/8 - NPC Witch/pixilart-sprite.png" id="2_xxsvc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g6unj"]
 atlas = ExtResource("2_xxsvc")
@@ -41,7 +41,7 @@ region = Rect2(960, 0, 120, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f10bm"]
 atlas = ExtResource("2_xxsvc")
-region = Rect2(600, 0, 120, 120)
+region = Rect2(0, 0, 120, 120)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_npc"]
 animations = [{
@@ -87,17 +87,17 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
-radius = 106.381
+radius = 64.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xxsvc"]
-size = Vector2(293, 223)
+size = Vector2(258, 196)
 
 [node name="NPC" type="CharacterBody2D"]
 script = ExtResource("1_acqhf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-5, 15.5)
-scale = Vector2(1.76667, 1.725)
+scale = Vector2(1.2, 1.171)
 sprite_frames = SubResource("SpriteFrames_npc")
 animation = &"interacted"
 autoplay = "idle"
@@ -109,7 +109,7 @@ shape = SubResource("CircleShape2D_interact")
 [node name="InteractionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-position = Vector2(-0.5, 9.5)
+position = Vector2(-18, 23)
 shape = SubResource("RectangleShape2D_xxsvc")
 
 [node name="InteractionPrompt" type="Label" parent="."]

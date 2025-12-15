@@ -1,6 +1,6 @@
+AudioStreamPlayer
 Timer
 CharacterBody2D
-AudioStreamPlayer
 CollisionShape2D
 Sprite2D
 Area2D
@@ -12,4 +12,3 @@ VBoxContainer
 CenterContainer
 Control
 Camera2D
-Node

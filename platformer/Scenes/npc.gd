@@ -2,7 +2,7 @@
 extends Node
 
 # Easily changeable dialogue text
-@export_multiline var dialogue_text: String = "Hello, traveler! Welcome to my humble village."
+@export_multiline var dialogue_text: String = "HI POOKIEEEE !!!! You finally woke up? Type shit !!."
 @export var interaction_range: float = 130.0
 
 @onready var animated_sprite = $AnimatedSprite2D

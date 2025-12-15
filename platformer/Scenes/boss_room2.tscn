@@ -10,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://c10hl1y7oryk0" path="res://Assets/Level_design/Fort of Illusion Files/Layers/back.png" id="7_3tf8n"]
 [ext_resource type="Texture2D" uid="uid://bdkoaktmdguav" path="res://Assets/Level_design/Fort of Illusion Files/Layers/all-props.png" id="8_s3iag"]
 [ext_resource type="AudioStream" uid="uid://1f4vxkvcs2i3" path="res://Assets/Music and sound/Level_1_Music.mp3" id="10_f8d8w"]
-[ext_resource type="PackedScene" uid="uid://cicc4txoc1epm" path="res://Scenes/enemy_door_fin.tscn" id="11_lwhro"]
 [ext_resource type="PackedScene" uid="uid://ovxwptopura8" path="res://Scenes/demon_boss.tscn" id="12_laykv"]
+[ext_resource type="PackedScene" uid="uid://csgffsova4bch" path="res://Scenes/end_door.tscn" id="12_t063w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y5vor"]
 texture = ExtResource("4_t063w")
@@ -3706,20 +3706,9 @@ volume_db = -10.0
 autoplay = true
 max_distance = 4096.0
 
-[node name="Door" parent="." instance=ExtResource("11_lwhro")]
-position = Vector2(3540, 31)
-
 [node name="Demon_Boss" parent="." instance=ExtResource("12_laykv")]
 position = Vector2(2184, 229)
 scale = Vector2(3.8, 3.8)
-move_speed = 250.0
-spawn_detection_range = 600.0
-chase_detection_range = 999999.0
-max_health = 300
-attack1_damage = 20
-attack2_damage = 15
-stun_duration = 0.3
-attack_range = 120.0
-attack_cooldown = 2.0
-damage_threshold = 100
-major_stun_duration = 1.0
+
+[node name="end_Door" parent="." instance=ExtResource("12_t063w")]
+position = Vector2(3548, 34)

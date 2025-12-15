@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://ovxwptopura8"]
+[gd_scene load_steps=54 format=3 uid="uid://ovxwptopura8"]
 
 [ext_resource type="Script" uid="uid://djc7ifg0kaf6x" path="res://Scenes/demon_boss_code.gd" id="1_rudov"]
 [ext_resource type="Texture2D" uid="uid://ceexed7lny7y6" path="res://Assets/Sprites/7 - Boss Wizard/Sprites/Attack1.png" id="2_lvhxm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cbkrylrkai2ju" path="res://Assets/Sprites/7 - Boss Wizard/Sprites/Idle.png" id="5_igc6o"]
 [ext_resource type="Texture2D" uid="uid://b03o5a0wovt0l" path="res://Assets/Sprites/7 - Boss Wizard/Sprites/Run.png" id="6_bmx4y"]
 [ext_resource type="Texture2D" uid="uid://c8qsy4qrbn5lo" path="res://Assets/Sprites/7 - Boss Wizard/Sprites/Take hit.png" id="7_xg778"]
+[ext_resource type="AudioStream" uid="uid://b1in4o60o1qqj" path="res://Assets/Music and sound/Boss_Fight.mp3" id="8_unmsc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xg778"]
 atlas = ExtResource("2_lvhxm")
@@ -397,6 +398,8 @@ shape = SubResource("CircleShape2D_lvhxm")
 enabled = false
 
 [node name="BossMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_unmsc")
+volume_db = -1.857
 
 [node name="StunTimer" type="Timer" parent="."]
 one_shot = true

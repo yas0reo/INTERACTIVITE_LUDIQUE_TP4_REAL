@@ -241,7 +241,7 @@ func _on_new_game_pressed():
 	fade_out.tween_property(fade_overlay, "modulate:a", 1.0, 1.0)
 	await fade_out.finished
 	# TODO: Replace with your story mode scene
-	get_tree().change_scene_to_file("res://Scenes/Tutorial_Level.tscn")
+	get_tree().change_scene_to_file("res://Scenes/dungeon.tscn")
 
 func _on_resume_game_pressed():
 	var fade_out = create_tween()

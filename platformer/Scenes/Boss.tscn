@@ -1,7 +1,8 @@
-[gd_scene load_steps=70 format=3 uid="uid://bw3jcoiri5uda"]
+[gd_scene load_steps=71 format=3 uid="uid://bw3jcoiri5uda"]
 
 [ext_resource type="Script" uid="uid://mwaiy6n2vmjr" path="res://Scenes/Boss.gd" id="1_jdskg"]
 [ext_resource type="Texture2D" uid="uid://cut1h8ftroqpb" path="res://Assets/Sprites/6-Boss_NightBorne/NightBorne.png" id="2_rgqsi"]
+[ext_resource type="AudioStream" uid="uid://cgbpa7au8l7gv" path="res://Assets/Music and sound/Tutorial_Music.mp3" id="3_smvyy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smvyy"]
 atlas = ExtResource("2_rgqsi")
@@ -513,3 +514,5 @@ shape = SubResource("CircleShape2D_smvyy")
 [node name="BossCamera" type="Camera2D" parent="."]
 
 [node name="BossMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_smvyy")
+volume_db = -4.0

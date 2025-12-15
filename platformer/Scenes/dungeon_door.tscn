@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=4 uid="uid://ctos8mvrvj1rm"]
+[gd_scene load_steps=13 format=4 uid="uid://ctos8mvrvj1rm"]
 
 [ext_resource type="PackedScene" uid="uid://qx8ypcr0pvck" path="res://Scenes/player.tscn" id="1_cydlf"]
 [ext_resource type="AudioStream" uid="uid://cv1qkb3qf47jm" path="res://Assets/Music and sound/Jump Sound Effect (High Quality) - JUKEBOX (youtube).mp3" id="2_gmo3f"]
 [ext_resource type="AudioStream" uid="uid://pdadwp2tmsm8" path="res://Assets/Music and sound/Dash.mp3" id="3_uoxt2"]
 [ext_resource type="Texture2D" uid="uid://dgkha8ivd44wo" path="res://Assets/Level_design/dungeon_sidescroller-Raou/Tilesetv3Bigger.png" id="4_0tdqa"]
-[ext_resource type="PackedScene" uid="uid://m8k45hnpdqu0" path="res://Scenes/enemy_door_scene2.tscn" id="5_1ao6r"]
 [ext_resource type="AudioStream" uid="uid://1f4vxkvcs2i3" path="res://Assets/Music and sound/Level_1_Music.mp3" id="6_rvjqv"]
 [ext_resource type="PackedScene" uid="uid://eysts6v5445c" path="res://Scenes/bat.tscn" id="7_0tdqa"]
 [ext_resource type="PackedScene" uid="uid://2ywol3pxb1x" path="res://Scenes/skeleton.tscn" id="8_1ao6r"]
+[ext_resource type="PackedScene" uid="uid://c5fnpynmf1pw3" path="res://Scenes/door3.tscn" id="9_0tdqa"]
 [ext_resource type="PackedScene" uid="uid://dg6ww0ogxt5rq" path="res://Scenes/Slime.tscn" id="9_rvjqv"]
+[ext_resource type="AudioStream" uid="uid://7871jwg1nw2r" path="res://Assets/Music and sound/Level_2_Music.mp3" id="10_1ao6r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6tvcj"]
 texture = ExtResource("4_0tdqa")
@@ -3039,9 +3040,6 @@ stream = ExtResource("2_gmo3f")
 position = Vector2(-525, -533)
 stream = ExtResource("3_uoxt2")
 
-[node name="Door" parent="." instance=ExtResource("5_1ao6r")]
-position = Vector2(2430, -1190)
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(1921, -349)
 stream = ExtResource("6_rvjqv")
@@ -3075,3 +3073,10 @@ position = Vector2(1610, -124)
 
 [node name="Slime2" parent="." instance=ExtResource("9_rvjqv")]
 position = Vector2(2178, -958)
+
+[node name="Door" parent="." instance=ExtResource("9_0tdqa")]
+position = Vector2(2434, -1198)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_1ao6r")
+volume_db = -4.643

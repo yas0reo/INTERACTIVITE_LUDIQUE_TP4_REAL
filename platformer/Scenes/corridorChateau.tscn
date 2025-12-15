@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=4 uid="uid://d3rnrn8w0mgy3"]
+[gd_scene load_steps=14 format=4 uid="uid://d3rnrn8w0mgy3"]
 
 [ext_resource type="PackedScene" uid="uid://qx8ypcr0pvck" path="res://Scenes/player.tscn" id="1_bovo1"]
 [ext_resource type="AudioStream" uid="uid://cv1qkb3qf47jm" path="res://Assets/Music and sound/Jump Sound Effect (High Quality) - JUKEBOX (youtube).mp3" id="2_ouca6"]
 [ext_resource type="AudioStream" uid="uid://pdadwp2tmsm8" path="res://Assets/Music and sound/Dash.mp3" id="3_hjbn0"]
 [ext_resource type="Texture2D" uid="uid://b708df8vtnqfa" path="res://Assets/Level_design/Final- Generic DUNGEON Pack/Assets/Assets.png" id="4_ckcem"]
-[ext_resource type="PackedScene" uid="uid://m8k45hnpdqu0" path="res://Scenes/enemy_door_scene2.tscn" id="5_pda66"]
+[ext_resource type="PackedScene" uid="uid://cicc4txoc1epm" path="res://Scenes/door5.tscn" id="5_yh3a2"]
+[ext_resource type="PackedScene" uid="uid://2ywol3pxb1x" path="res://Scenes/skeleton.tscn" id="6_hjbn0"]
+[ext_resource type="PackedScene" uid="uid://dg6ww0ogxt5rq" path="res://Scenes/Slime.tscn" id="7_ckcem"]
+[ext_resource type="PackedScene" uid="uid://eysts6v5445c" path="res://Scenes/bat.tscn" id="8_pda66"]
+[ext_resource type="AudioStream" uid="uid://cmveuis2yau28" path="res://Assets/Music and sound/Chiptune Dream Loop.wav" id="9_ckcem"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bovo1"]
 texture = ExtResource("4_ckcem")
@@ -517,5 +521,30 @@ stream = ExtResource("2_ouca6")
 position = Vector2(-525, -533)
 stream = ExtResource("3_hjbn0")
 
-[node name="Door" parent="." instance=ExtResource("5_pda66")]
-position = Vector2(7015, 273)
+[node name="Door" parent="." instance=ExtResource("5_yh3a2")]
+position = Vector2(7119, 275)
+
+[node name="SkeletonEnemy" parent="." instance=ExtResource("6_hjbn0")]
+position = Vector2(3197, 663)
+
+[node name="SkeletonEnemy2" parent="." instance=ExtResource("6_hjbn0")]
+position = Vector2(6545, 299)
+
+[node name="Slime" parent="." instance=ExtResource("7_ckcem")]
+position = Vector2(1313, 442)
+
+[node name="Slime2" parent="." instance=ExtResource("7_ckcem")]
+position = Vector2(4896, 283)
+
+[node name="BatEnemy" parent="." instance=ExtResource("8_pda66")]
+position = Vector2(805, 455)
+
+[node name="BatEnemy2" parent="." instance=ExtResource("8_pda66")]
+position = Vector2(2497, 449)
+
+[node name="BatEnemy3" parent="." instance=ExtResource("8_pda66")]
+position = Vector2(4209, 300)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_ckcem")
+volume_db = -4.643
