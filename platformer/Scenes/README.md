@@ -8,4 +8,3 @@ Selon l’organisation du projet, ce dossier contient :
 - Scènes de personnages (player, entités)
 - Scènes d’environnement (plateformes, obstacles)
 - Scènes utilitaires (UI, tests, prototypes)
-
