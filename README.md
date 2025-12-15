@@ -1,10 +1,24 @@
-# TP 2 pour le cour d'interactivité ludique
+# TP – Interactivité ludique | Platformer (Godot)
 
-Code inspiré de Icy Engine sur youtube
+Ce dépôt contient un **TP de platformer** réalisé avec **Godot**, en **GDScript**.
 
-Assets récuperer sur Itch.io
-(sprite sheet de la sorcière fait par yas0reo)
+## Contenu du dépôt
+- `platformer/` : projet Godot (scènes, scripts, assets, config)
 
-https://raou.itch.io/dark-dun
-https://bakudas.itch.io/generic-dungeon-pack
-https://ansimuz.itch.io/sunnyland-fort-of-illusion
+## Technologies
+- Godot Engine
+- GDScript
+
+## Installation / Exécution
+1. Cloner le dépôt
+2. Ouvrir Godot
+3. Importer / ouvrir le dossier `platformer/`
+4. Lancer le jeu depuis l’éditeur (Run)
+
+## Références & crédits
+- Code inspiré de “Icy Engine” (YouTube)
+- Assets récupérés sur Itch.io :
+  - raou – dark dungeon
+  - bakudas – generic dungeon pack
+  - ansimuz – sunnyland fort of illusion
+- Spritesheet de la sorcière : yas0reo
