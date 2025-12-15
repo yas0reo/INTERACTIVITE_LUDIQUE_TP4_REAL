@@ -1,4 +1,4 @@
-# Assets — Interactivité ludique (TP Platformer)
+# Assets
 
 L’ensemble des **ressources visuelles** utilisées dans le projet.
 
