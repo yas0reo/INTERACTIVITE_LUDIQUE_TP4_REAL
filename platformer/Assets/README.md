@@ -22,4 +22,3 @@ Les assets utilisés dans ce projet proviennent principalement de **itch.io** :
 
 ## Créations originales
 - **Sprite sheet de la sorcière** : créé par *yas0reo*
-
